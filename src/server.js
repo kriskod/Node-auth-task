@@ -1,9 +1,15 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const morgan = require("morgan");
+const fetch = require("node-fetch");
+require("dotenv").config();
 const { authFactory, AuthError } = require("./auth");
 
-const PORT = 3000;
-const { JWT_SECRET } = process.env;
+const moviesRoutes = require("./routes/movies");
+
+const { JWT_SECRET, MONGO_USER, MONGO_PASSWORD, PORT, API_KEY } = process.env;
+const port = PORT || 3000;
 
 if (!JWT_SECRET) {
   throw new Error("Missing JWT_SECRET env var. Set it and restart the server");
@@ -13,6 +19,7 @@ const auth = authFactory(JWT_SECRET);
 const app = express();
 
 app.use(bodyParser.json());
+app.use(morgan("dev"));
 
 app.post("/auth", (req, res, next) => {
   if (!req.body) {
@@ -38,6 +45,8 @@ app.post("/auth", (req, res, next) => {
   }
 });
 
+app.use("/movies", moviesRoutes);
+
 app.use((error, _, res, __) => {
   console.error(
     `Error processing request ${error}. See next message for details`
@@ -47,6 +56,16 @@ app.use((error, _, res, __) => {
   return res.status(500).json({ error: "internal server error" });
 });
 
-app.listen(PORT, () => {
-  console.log(`auth svc running at port ${PORT}`);
-});
+mongoose
+  .connect(
+    `mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}@moviesdb.w5jju.mongodb.net/<dbname>?retryWrites=true&w=majority`,
+    { useNewUrlParser: true, useUnifiedTopology: true }
+  )
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`auth svc running at port ${port}`);
+    });
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
