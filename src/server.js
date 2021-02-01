@@ -2,7 +2,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
-const fetch = require("node-fetch");
 require("dotenv").config();
 const { authFactory, AuthError } = require("./auth");
 
@@ -35,7 +34,7 @@ app.post("/auth", (req, res, next) => {
   try {
     const token = auth(username, password);
 
-    return res.status(200).json({ token });
+    return res.status(200).json({ token, token });
   } catch (error) {
     if (error instanceof AuthError) {
       return res.status(401).json({ error: error.message });
