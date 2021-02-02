@@ -1,6 +1,4 @@
 const { MongoClient } = require("mongodb");
-require("dotenv").config();
-const { MONGO_USER, MONGO_PASSWORD } = process.env;
 
 describe("insert", () => {
   let connection;
@@ -11,7 +9,8 @@ describe("insert", () => {
       `mongodb+srv://admin:@dm1n@moviesdb.w5jju.mongodb.net/<dbname>?retryWrites=true&w=majority`,
       {
         useNewUrlParser: true,
-      }
+      },
+      { useUnifiedTopology: true }
     );
     db = await connection.db("<dbname>");
   });
