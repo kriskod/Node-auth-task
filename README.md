@@ -16,6 +16,9 @@ If premium user can upload unlimited movies, if basic user should upload only 5 
 `mongoose`
 `jsonwebtoken`
 
+### CI - Github Actions
+On Actions page there is working CI that runs every test in /tests directory.
+
 ### Run
 npm start </br>
 docker-compose up
