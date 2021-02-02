@@ -8,7 +8,7 @@ describe("insert", () => {
 
   beforeAll(async () => {
     connection = await MongoClient.connect(
-      `mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}@moviesdb.w5jju.mongodb.net/<dbname>?retryWrites=true&w=majority`,
+      `mongodb+srv://admin:@dm1n@moviesdb.w5jju.mongodb.net/<dbname>?retryWrites=true&w=majority`,
       {
         useNewUrlParser: true,
       }
