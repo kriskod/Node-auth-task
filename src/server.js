@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
+const cookie = require("cookie-parser");
 require("dotenv").config();
 const { authFactory, AuthError } = require("./auth");
 
@@ -17,6 +18,7 @@ if (!JWT_SECRET) {
 const auth = authFactory(JWT_SECRET);
 const app = express();
 
+app.use(cookie());
 app.use(bodyParser.json());
 app.use(morgan("dev"));
 

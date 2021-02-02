@@ -14,7 +14,7 @@ const isLoggedIn = async (req, res, next) => {
       } else {
         req.userId = decoded.userId;
         user_role = decoded.role;
-        console.log(user_role);
+        res.cookie("user_role", user_role);
       }
     });
   } else {
