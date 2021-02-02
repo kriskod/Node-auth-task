@@ -10,6 +10,7 @@ To post a movie user has to be logged in. Verification due to jwt says which use
 If premium user can upload unlimited movies, if basic user should upload only 5 movies a month - still in development.
 
 ### Technologies
+`express`
 `cookie-parser`
 `morgan`
 `mongoose`
